@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const EditArticle = (props) => {
   const [title, setTitle] = useState("");
@@ -7,6 +8,7 @@ const EditArticle = (props) => {
   const [authorname, setAuthorname] = useState("");
   const [message, setMessage] = useState("");
   const [fileName, setFileName] = useState("");
+  const history = useHistory();
 
   const onChangeFile = (e) => {
     setFileName(e.target.files[0]);
@@ -22,6 +24,7 @@ const EditArticle = (props) => {
       .put(`/articles/update/${props.match.params.id}`, formData)
       .then((res) => setMessage(res.data))
       .catch((err) => console.log(err));
+    history.goBack();
   };
   useEffect(() => {
     axios
@@ -35,7 +38,7 @@ const EditArticle = (props) => {
       .catch((err) => console.log(err));
   }, []);
   return (
-    <div className="container">
+    <div className="container bottom">
       <div className="row">
         <div className="col-md-6">
           <h3>Edit Article</h3>
